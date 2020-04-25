@@ -7,7 +7,7 @@ const authConfig = require('../../config/auth');
 
 module.exports = {
     async execute({ email, password }) {
-        const user = await connection('investidores').where('email', email);
+        const user = await connection('investidores').where('email', email).select('*');
 
         if (!user) {
             throw new Error('Cadastre-se antes de logar!');
