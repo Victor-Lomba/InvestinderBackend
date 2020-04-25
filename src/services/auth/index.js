@@ -16,5 +16,16 @@ module.exports = {
         if (user.password !== password) {
             throw new Error('Email/senha incorretos');
         }
+
+        const { expiresIn, secret } = authConfig.jwt;
+        const token = sign({}, secret, {
+            subject: user.id,
+            expiresIn,
+        });
+
+        return {
+            user,
+            token,
+        };
     }
 }
