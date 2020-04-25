@@ -10,7 +10,28 @@ module.exports = {
         const userPic = user.select('pic');
 
         if (!user){
-            throw new Error('Apenas usuários podem alterar a foto de perfil');
+            const userConsultor = connection('consultores').where('id', user_id);
+            const userCPic = userConsultor.select('pic');
+
+            if (!userConsultor) {
+                throw new Error('Apenas usuários podem alterar a foto de perfil');
+            }
+
+            if (userCPic) {
+                const cpicPath = path.join(uploadConfig.directory, userCPic);
+
+                const cpicExists = await fs.promises.stat(cpicPath);
+
+                if(cpicExists) {
+                    await fs.promises.unlink(cpicPath);
+                }
+            }
+
+            userCPic = pic_filename;
+
+            await connection('consultores').insert({ pic: pic_filename });
+
+            return userConsultor;
         }
 
         if (userPic){
