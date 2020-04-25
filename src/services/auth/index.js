@@ -1,20 +1,20 @@
 const { compare } = require('bcryptjs');
 const { sign } = require('jsonwebtoken');
 
+const connection = require('../../database/conection');
 const authConfig = require('../../config/auth');
 
-interface Request {
-    email: String;
-    password: String;
-}
 
-interface Response {
-    user: String;
-    token: String;
-}
+module.exports = {
+    async execute({ email, password }) {
+        const user = await connection('investidores').where('email', email);
 
-
-class AuthUser {
-    public async execute({ email, password }: Request): Response {
+        if (!user) {
+            throw new Error('Cadastre-se antes de logar!');
+        }
+        
+        if (user.password !== password) {
+            throw new Error('Email/senha incorretos');
+        }
     }
 }

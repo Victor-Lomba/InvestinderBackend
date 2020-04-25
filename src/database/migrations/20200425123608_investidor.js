@@ -7,6 +7,7 @@ exports.up = function(knex) {
       table.string('password').notNullable();
       table.string('telefone');
       table.string('bio');
+      table.json('matches');
   })
 };
 
