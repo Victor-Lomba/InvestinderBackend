@@ -1,23 +1,38 @@
 // const { compare } = require('bcryptjs');
 const { sign } = require('jsonwebtoken');
 
-const connection = require('../../database/conection');
+const connection = require('../../database/connection');
 const authConfig = require('../../config/auth');
 
+const { expiresIn, secret } = authConfig.jwt;
 
 module.exports = {
     async execute({ email, password }) {
         const user = await connection('investidores').where('email', email);
 
         if (!user) {
-            throw new Error('Cadastre-se antes de logar!');
+            const userConsultor = connection('consultores').where('email', email);
+
+            if (!userConsultor) {
+                throw new Error('Cadastre-se antes de logar!');
+            }
+
+            if(userConsultor.password !== password) {
+                throw new Error('Email/senha incorretos');
+            }
+
+            const token = sign({}, secret, {
+                subject: userConsultor.id,
+                expiresIn,
+            });
+
+            return { user, token, };
         }
-        
+
         if (user.password !== password) {
             throw new Error('Email/senha incorretos');
         }
 
-        const { expiresIn, secret } = authConfig.jwt;
         const token = sign({}, secret, {
             subject: user.id,
             expiresIn,

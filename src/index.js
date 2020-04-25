@@ -7,12 +7,20 @@ const routes = require('./routes/index');
 
 const app = express();
 
+<<<<<<< HEAD
 
 // io.on('connection', (socket) => {
 //    socket.on('chat message', (msg) => {
 //      console.log('message: ' + msg);
 //    });
 //  });
+=======
+// io.on('connection', (socket) => {
+//     socket.on('chat message', (msg) => {
+//       console.log('message: ' + msg);
+//     });
+//   });
+>>>>>>> 8b226c4eba974ac63c6ada0d0688e79717c4117b
 
 app.use(cors());
 app.use(express.json());
