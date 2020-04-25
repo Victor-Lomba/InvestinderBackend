@@ -1,4 +1,4 @@
-const { compare } = require('bcryptjs');
+// const { compare } = require('bcryptjs');
 const { sign } = require('jsonwebtoken');
 
 const connection = require('../../database/conection');
