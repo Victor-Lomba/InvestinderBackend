@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const connection = require('../../database/conection');
+const connection = require('../../database/connection');
 const uploadConfig = require('../../config/pic');
 
 module.exports = {

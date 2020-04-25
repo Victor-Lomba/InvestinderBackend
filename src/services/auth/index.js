@@ -1,7 +1,7 @@
 // const { compare } = require('bcryptjs');
 const { sign } = require('jsonwebtoken');
 
-const connection = require('../../database/conection');
+const connection = require('../../database/connection');
 const authConfig = require('../../config/auth');
 
 const { expiresIn, secret } = authConfig.jwt;
@@ -28,7 +28,7 @@ module.exports = {
 
             return { user, token, };
         }
-        
+
         if (user.password !== password) {
             throw new Error('Email/senha incorretos');
         }
