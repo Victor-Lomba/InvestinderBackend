@@ -8,7 +8,8 @@ const { expiresIn, secret } = authConfig.jwt;
 
 module.exports = {
     async execute({ email, password }) {
-        const user = await connection('investidores').where('email', email);
+        const json = await connection('investidores').where('email', email);
+        const user = json[0];
 
         if (!user) {
             const userConsultor = connection('consultores').where('email', email);
