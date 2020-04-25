@@ -39,9 +39,6 @@ module.exports = {
             expiresIn,
         });
 
-        return {
-            user,
-            token,
-        };
+        return { user, token };
     }
 }
