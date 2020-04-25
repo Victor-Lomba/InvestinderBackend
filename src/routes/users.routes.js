@@ -12,11 +12,13 @@ userRouter.get('/dashboard', );
 
 userRouter.post('/', );
 
+userRouter.post('/profile/:id', );
+
 userRouter.put('/profile', );
 
 usersRouter.patch(
-    '/pic',
-    ensureAuthenticated,
+    '/profile/pic',
+    isAuthenticated,
     upload.single('pic'),
     async (request, response) => {
         const updateUserAvatar = new uploadService();
