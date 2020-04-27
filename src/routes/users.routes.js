@@ -24,7 +24,7 @@ userRouter.post('investidor/:id/likes', isAuthenticated.confirmAuth, UserConsLik
 
 userRouter.post('investidor/:id/likes', isAuthenticated.confirmAuth, UserConsDislike.dislike);
 
-userRouter.patch('/edit', isAuthenticated.confirmAuth);
+userRouter.patch('/edit/:id', isAuthenticated.confirmAuth);
 
 
 module.exports = userRouter;
