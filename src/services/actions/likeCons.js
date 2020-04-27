@@ -5,12 +5,12 @@ module.exports = {
         const { TargetId } = request.params;
         const { UserId } = request.headers;
 
-        const loggedUser = await connection('investidores').where('id', UserId);
+        const loggedUser = await connection('consultores').where('id', UserId);
 
-        const targetUser = await connection('consultores').where('id', TargetId);
+        const targetUser = await connection('investidores').where('id', TargetId);
 
         if (!targetUser) {
-            throw new Error('Consultor/acessor não encontrado');
+            throw new Error('Investidor não encontrado');
         }
 
         const oldLikes = loggedUser.likes;
