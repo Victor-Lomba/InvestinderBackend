@@ -3,13 +3,14 @@ const multer = require('multer');
 
 const uploadConfig = require('../config/pic');
 const UserCreator = require('../services/user/create');
+const MongoCreate = require('../services/user/createMongo');
 const uploadService = require('../services/upload');
 const isAuthenticated = require('../middleware/isAuthenticated');
 
 const userRouter = express.Router();
 const upload = multer(uploadConfig);
 
-userRouter.post('/', UserCreator.create);
+userRouter.post('/', MongoCreate.create);
 
 userRouter.post('/:id', );
 

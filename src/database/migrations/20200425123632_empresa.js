@@ -9,10 +9,12 @@ exports.up = function(knex) {
       table.string('empresa').nullable();
       table.string('bio').nullable();
       table.string('pic').nullable();
+      table.json('likes').nullable();
+      table.json('dislikes').nullable();
       table.json('matches').nullable();
   });
 }
 
 exports.down = function(knex) {
-  return knex.schema.dropTable('consultor');
+  return knex.schema.dropTable('consultores');
 };

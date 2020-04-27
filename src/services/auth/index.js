@@ -12,7 +12,7 @@ module.exports = {
         const user = json[0];
 
         if (!user) {
-            const userConsultor = connection('consultores').where('email', email);
+            const userConsultor = await connection('consultores').where('email', email);
 
             if (!userConsultor) {
                 throw new Error('Cadastre-se antes de logar!');

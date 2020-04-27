@@ -3,7 +3,7 @@ const crypto = require('crypto');
 
 module.exports ={
 async create(request,response){
-    const { name, email, password, telefone, bio, pic } = request.body;
+    const { name, email, password, telefone, bio, interesses, pic } = request.body;
     const id = crypto.randomBytes(8).toString('HEX');
 
     await connection('investidores').insert({
@@ -13,10 +13,11 @@ async create(request,response){
         password,
         telefone,
         bio,
+        interesses,
         pic,
     })
 
-    return response.json({ id, name, email, telefone, bio, pic });
+    return response.json({ id, name, email, telefone, bio, interesses, pic });
 
     }
 
