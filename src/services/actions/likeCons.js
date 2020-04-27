@@ -18,6 +18,10 @@ module.exports = {
         const matcheck = targetUser.likes;
 
         if (matcheck.includes(loggedUser.id)) {
+            const OldMatches = loggedUser.matches;
+
+            loggedUser.update('likes', [OldMatches, targetUser.id]);
+
             const loggedSocket = request.connectedUsers[id];
             const targetSocket = request.connectedUsers[TargID];
 
