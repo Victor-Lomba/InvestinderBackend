@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 
-const test = require('./routes/cryptoRequest');
+// const cryptoRequest = require('./routes/cryptoRequest');
 
 const routes = require('./routes/index');
 
