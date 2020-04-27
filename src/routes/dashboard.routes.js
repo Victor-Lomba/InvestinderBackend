@@ -5,8 +5,8 @@ const Investidoresores = require('../services/user/indexInv');
 
 const indexRouter = express.Router();
 
-indexRouter.get('/cons', Consultores.index);
+indexRouter.get('/cons/:id', Consultores.index);
 
-indexRouter.get('/invs', Investidoresores.index);
+indexRouter.get('/invs/:id', Investidoresores.index);
 
 module.exports = indexRouter;
