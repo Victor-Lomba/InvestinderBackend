@@ -2,12 +2,12 @@ const connection = require('../../database/connection');
 
 module.exports = {
     async like(request, response) {
-        const { TargetId } = request.params;
-        const { UserId } = request.headers;
+        const  TargetId  = request.params;
+        const  UserId  = request.headers;
 
-        const loggedUser = await connection('investidores').where('id', UserId);
+        const loggedUser = await connection('investidores').where('id', UserId).select('*');
 
-        const targetUser = await connection('consultores').where('id', TargetId);
+        const targetUser = await connection('consultores').where('id', TargetId).select('*');
 
         if (!targetUser) {
             throw new Error('Consultor/acessor não encontrado');
@@ -17,7 +17,7 @@ module.exports = {
 
         const matcheck = targetUser.likes;
 
-        if (matcheck.includes(loggedUser.id)) {
+        if (matcheck.indexOf(loggedUser.id)) {
             const OldMatches = loggedUser.matches;
 
             loggedUser.update('likes', [OldMatches, targetUser.id]);
