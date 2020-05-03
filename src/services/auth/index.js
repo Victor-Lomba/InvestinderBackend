@@ -12,18 +12,20 @@ module.exports = {
         const user = json[0];
 
         if (!user) {
-            const userConsultor = await connection('consultores').where('email', email);
+            const json2 = await connection('consultores').where('email', email);
 
-            if (!userConsultor) {
+            const user = json2[0];
+
+            if (!user) {
                 throw new Error('Cadastre-se antes de logar!');
             }
 
-            if(userConsultor.password !== password) {
+            if(user.password !== password) {
                 throw new Error('Email/senha incorretos');
             }
 
             const token = sign({}, secret, {
-                subject: userConsultor.id,
+                subject: user.id,
                 expiresIn,
             });
 
