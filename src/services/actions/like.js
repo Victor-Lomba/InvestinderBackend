@@ -5,7 +5,7 @@ module.exports = {
         const { TargetId } = request.params;
         const UserId = request.headers;
 
-        const loggedUser = await connection('investidores').where('id', UserId.id);
+        const loggedUser = await connection('investidores').where('id', UserId.userid);
 
         const targetUser = await connection('consultores').where('id', TargetId);
 
@@ -22,10 +22,10 @@ module.exports = {
 
             const newMatches = `${OldMatches} ${targetUser[0].id}`;
 
-            await connection('investidores').where('id', UserId.id).update({ matches: newMatches });
+            await connection('investidores').where('id', UserId.userid).update({ matches: newMatches });
             await connection('consultores').where('id', TargetId).update({ matches: newMatches });
 
-            const loggedSocket = request.connectedUsers[UserId.id];
+            const loggedSocket = request.connectedUsers[UserId.userid];
             const targetSocket = request.connectedUsers[TargetId];
 
             if (loggedSocket) {
@@ -39,8 +39,10 @@ module.exports = {
 
         const newLikes = `${oldLikes} ${targetUser[0].id}`;
 
-        await connection('consultores').where('id', UserId.id).update({ likes: newLikes });
+        delete null;
 
-        return response.json(loggedUser);
+        const result = await connection('investidores').where('id', UserId.userid).update({likes: newLikes});
+
+        return response.json(result);
     }
 }

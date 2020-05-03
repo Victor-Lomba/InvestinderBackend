@@ -5,7 +5,7 @@ module.exports = {
         const { TargetId } = request.params;
         const UserId = request.headers;
 
-        const loggedUser = await connection('investidores').where('id', UserId.id);
+        const loggedUser = await connection('investidores').where('id', UserId.userid);
 
         const targetUser = await connection('consultores').where('id', TargetId);
 
@@ -17,7 +17,7 @@ module.exports = {
 
         const newDisLikes = `${oldDisLikes} ${targetUser[0].id}`;
 
-        await connection('consultores').where('id', UserId.id).update({ dislikes: newDisLikes });
+        await connection('consultores').where('id', UserId.userid).update({ dislikes: newDisLikes });
 
         return response.json(loggedUser);
     }
