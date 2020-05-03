@@ -9,7 +9,7 @@ const UserDislike = require('../services/actions/dislike');
 const UserConsLike = require('../services/actions/likeCons');
 const UserConsDislike = require('../services/actions/dislikeCons');
 
-const isAuthenticated = require('../middleware/isAuthenticated');
+// const isAuthenticated = require('../middleware/isAuthenticated');
 
 const userRouter = express.Router();
 
@@ -22,15 +22,13 @@ userRouter.get('/consultor/list', ListCons.index);
 
 userRouter.post('/consultor', ConsultorUserCreator.create);
 
-userRouter.post('/consultor/like',  UserLike.like);
+userRouter.post('/investidor/:TargetId/like', UserLike.like);
 
-userRouter.post('/consultor/dislike', isAuthenticated.confirmAuth, UserDislike.dislike);
+userRouter.post('/investidor/:TargetId/dislike', UserDislike.dislike);
 
-userRouter.post('/investidor/like', isAuthenticated.confirmAuth, UserConsLike.like);
+userRouter.post('/consultor/:TargetId/like', UserConsLike.like);
 
-userRouter.post('/investidor/dislike', isAuthenticated.confirmAuth, UserConsDislike.dislike);
-
-userRouter.patch('/edit/:id', isAuthenticated.confirmAuth);
+userRouter.post('/consultor/:TargetId/dislike', UserConsDislike.dislike);
 
 
 module.exports = userRouter;

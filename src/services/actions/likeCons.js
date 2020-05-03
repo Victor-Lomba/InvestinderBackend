@@ -3,9 +3,9 @@ const connection = require('../../database/connection');
 module.exports = {
     async like(request, response) {
         const { TargetId } = request.params;
-        const { UserId } = request.headers;
+        const UserId = request.headers;
 
-        const loggedUser = await connection('consultores').where('id', UserId);
+        const loggedUser = await connection('consultores').where('id', UserId.id);
 
         const targetUser = await connection('investidores').where('id', TargetId);
 
@@ -13,17 +13,20 @@ module.exports = {
             throw new Error('Investidor não encontrado');
         }
 
-        const oldLikes = loggedUser.likes;
+        const oldLikes = loggedUser[0].likes;
 
-        const matcheck = targetUser.likes;
+        const matcheck = targetUser[0].likes;
 
-        if (matcheck.includes(loggedUser.id)) {
-            const OldMatches = loggedUser.matches;
+        if (matcheck !== null && matcheck.indexOf(loggedUser.id)) {
+            const OldMatches = loggedUser[0].matches;
 
-            loggedUser.update('likes', [OldMatches, targetUser.id]);
+            const newMatches = `${OldMatches} ${targetUser[0].id}`;
 
-            const loggedSocket = request.connectedUsers[id];
-            const targetSocket = request.connectedUsers[TargID];
+            await connection('consultores').where('id', UserId.id).update({ matches: newMatches });
+            await connection('investidores').where('id', TargetId).update({ matches: newMatches });
+
+            const loggedSocket = request.connectedUsers[UserId.id];
+            const targetSocket = request.connectedUsers[TargetId];
 
             if (loggedSocket) {
                 request.io.to(loggedSocket).emit('Match!', targetUser);
@@ -34,7 +37,9 @@ module.exports = {
             }
         }
 
-        loggedUser.update('likes', [oldLikes, targetUser.id]);
+        const newLikes = `${oldLikes} ${targetUser[0].id}`;
+
+        await connection('consultores').where('id', UserId.id).update({ likes: newLikes });
 
 
         return response.json(loggedUser);
