@@ -3,9 +3,9 @@ const connection = require('../../database/connection');
 module.exports = {
     async dislike(request, response) {
         const { TargetId } = request.params;
-        const UserId = request.headers;
+        const UserId = request.body;
 
-        const loggedUser = await connection('consultores').where('id', UserId.userid);
+        const loggedUser = await connection('consultores').where('id', UserId.UserId);
 
         const targetUser = await connection('investidores').where('id', TargetId);
 
@@ -17,7 +17,7 @@ module.exports = {
 
         const newDisLikes = `${oldDisLikes} ${targetUser[0].id}`;
 
-        await connection('consultores').where('id', UserId.userid).update({ dislikes: newDisLikes });
+        await connection('consultores').where('id', UserId.UserId).update({ dislikes: newDisLikes });
 
         return response.json(loggedUser);
     }

@@ -3,9 +3,9 @@ const connection = require('../../database/connection');
 module.exports = {
     async like(request, response) {
         const { TargetId } = request.params;
-        const UserId = request.headers;
+        const UserId = request.body;
 
-        const loggedUser = await connection('consultores').where('id', UserId.userid);
+        const loggedUser = await connection('consultores').where('id', UserId.UserId);
 
         const targetUser = await connection('investidores').where('id', TargetId);
 
@@ -23,10 +23,10 @@ module.exports = {
             const newMatches = `${OldMatches} ${targetUser[0].id}`;
             const newMatches2 = `${OldMatches} ${loggedUser[0].id}`;
 
-            await connection('consultores').where('id', UserId.userid).update({ matches: newMatches });
+            await connection('consultores').where('id', UserId.UserId).update({ matches: newMatches });
             await connection('investidores').where('id', TargetId).update({ matches: newMatches2 });
 
-            const loggedSocket = request.connectedUsers[UserId.userid];
+            const loggedSocket = request.connectedUsers[UserId.UserId];
             const targetSocket = request.connectedUsers[TargetId];
 
             if (loggedSocket) {
@@ -42,7 +42,7 @@ module.exports = {
 
         delete null;
 
-        await connection('consultores').where('id', UserId.userid).update({likes: newLikes});
+        await connection('consultores').where('id', UserId.UserId).update({likes: newLikes});
 
         return response.json(loggedUser);
     }
