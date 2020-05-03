@@ -2,42 +2,29 @@ const connection = require('../../database/connection');
 
 module.exports = {
     async index(request, response) {
-    
-        if(!request.headers.authorization)return response.status(401).send();
-        const uid = request.headers.authorization;
 
-        const usuario = await connection('investidores').where('id', uid).select('*');
-
-        const likes = usuario.likes.split(' ');
-        const dislikes = usuario.dislikes;
-
-        
-        
-
-        const consultor = await connection('consultores').select('*');
-
-
-        var resposta = [];
-        if(!likes == null){
-            for(let y of consultor){
-            let liked = false;
-                for(let i of likes){
-                    if(i == y.id)
-                    {
-                        liked = true;
-                    }
-                }
-                if(!liked){resposta += y}
-            }
+        const uid = request.headers;
+        if(!uid){
+            return response.status(401).send();
         }
-        if(!dislikes == null){}
-        resposta = consultor[0];
-       
 
-            
-        
+        const usuario = await connection('investidores').where('id', uid.uid);
 
+        const likes = usuario[0].likes !== null ? usuario[0].likes.split(' ') : null;
+        const dislikes = usuario[0].dislikes !== null ? usuario[0].dislikes.split(' ') : null;
 
-        return response.json(resposta);
+        const consultores = await connection('consultores').select('*');
+
+        if (likes !== null){
+            consultores.filter(consultor => !likes.includes(consultor.id));
+        }
+
+        if(dislikes !== null){
+            consultores.filter(consultor => !dislikes.includes(consultor.id));
+        }
+
+        const consultor = consultores[0];
+
+        return response.json(consultor);
     }
 }

@@ -4,15 +4,27 @@ module.exports = {
     async index(request, response) {
 
         const uid = request.headers;
+        if(!uid){
+            return response.status(401).send();
+        }
 
-        const usuario = await connection('consultores').where('id', uid).select('*');
+        const usuario = await connection('consultores').where('id', uid.uid);
 
-        const likes = usuario.likes;
-        const dislikes = usuario.dislikes;
+        const likes = usuario[0].likes !== null ? usuario[0].likes.split(' ') : null;
+        const dislikes = usuario[0].dislikes !== null ? usuario[0].dislikes.split(' ') : null;
 
-        const consultor = await connection('investidores').first();
+        const investidores = await connection('investidores').select('*');
 
+        if (likes !== null){
+            investidores.filter(consultor => !likes.includes(consultor.id));
+        }
 
-        return response.json(consultor);
+        if(dislikes !== null){
+            investidores.filter(consultor => !dislikes.includes(consultor.id));
+        }
+
+        const investidor = investidores[0];
+
+        return response.json(investidor);
     }
 }
