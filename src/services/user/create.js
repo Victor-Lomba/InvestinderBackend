@@ -1,7 +1,7 @@
 const connection = require('../../database/connection');
 const crypto = require('crypto');
 
-module.exports ={
+module.exports = {
 async create(request,response){
     const { name, email, password, telefone, bio, interesses, pic } = request.body;
     const id = crypto.randomBytes(8).toString('HEX');
