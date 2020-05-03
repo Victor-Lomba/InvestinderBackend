@@ -6,7 +6,7 @@ module.exports = {
         const authHeader = request.headers.authorization;
 
         if (!authHeader){
-            throw new Error('JWT token não encontrado!');
+            return response.status(404).json({error: 'Token não encontrado!'});
         }
 
         var _a = authHeader.split(' '), token = _a[1];
@@ -21,7 +21,7 @@ module.exports = {
 
             return next();
         } catch(err) {
-            throw new Error('Token inválido');
+            return response.status(404).json({error: 'Token inválido!'});
         }
     }
 }

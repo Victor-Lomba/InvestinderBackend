@@ -5,7 +5,7 @@ module.exports = {
 
         const uid = request.headers;
         if(!uid){
-            return response.status(401).send();
+            return response.status(401).json({error: 'Você não está logado!'});
         }
 
         const usuario = await connection('consultores').where('id', uid.uid);

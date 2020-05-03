@@ -27,7 +27,7 @@ module.exports = {
                 expiresIn,
             });
 
-            return { user, token, };
+            return { user, token };
         }
 
         if (user.password !== password) {

@@ -10,7 +10,7 @@ module.exports = {
         const targetUser = await connection('investidores').where('id', TargetId);
 
         if (!targetUser) {
-            throw new Error('Investidor não encontrado');
+            return response.status(404).json({error: 'Usuário não encontrado!'});
         }
 
         const oldDisLikes = loggedUser[0].dislikes;

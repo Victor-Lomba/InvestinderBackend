@@ -6,7 +6,7 @@ async create(request,response){
     const { name, email, password, telefone, bio, interesses, pic } = request.body;
     const id = crypto.randomBytes(8).toString('HEX');
 
-   
+
     try {await connection('investidores').insert({
         id,
         name,
@@ -20,7 +20,7 @@ async create(request,response){
 }catch(err){
     console.log(err);
     if(err.code == 'SQLITE_CONSTRAINT'){
-        throw new Error('Esse email já está cadastrado');
+        return response.status(400).json({error: 'Esse e-mail já está sendo utilizado!'});
     }
 }
 

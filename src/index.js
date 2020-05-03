@@ -14,8 +14,7 @@ const io = require('socket.io')(server);
 io.on('connection', socket => {
     const { id } = socket.handshake.query
     connectedUsers[id] = socket.id
-    console.log('Client connectet:', id )
-
+    console.log('Client connectet:', id );
 })
 
 io.on('connection', (socket) => {
