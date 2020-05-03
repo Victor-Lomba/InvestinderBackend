@@ -6,7 +6,7 @@ module.exports = {
         const ids = body.id.split(' ');
         let resposta = [];
         for(let id of ids){
-            resposta.push( await connection('consultores').where('id',id).first());
+            resposta.push( await connection('investidores').where('id',id).first());
         }
         return response.json(resposta);
     }
