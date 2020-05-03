@@ -23,6 +23,7 @@ module.exports = {
             const newMatches = `${OldMatches} ${targetUser[0].id}`;
 
             await connection('consultores').where('id', UserId.id).update({ matches: newMatches });
+            await connection('investidores').where('id', TargetId).update({ matches: newMatches });
 
             const loggedSocket = request.connectedUsers[UserId.id];
             const targetSocket = request.connectedUsers[TargetId];

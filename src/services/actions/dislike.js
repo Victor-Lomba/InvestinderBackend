@@ -2,20 +2,23 @@ const connection = require('../../database/connection');
 
 module.exports = {
     async dislike(request, response) {
-        const { TargID } = request.params;
-        const { id } = request.headers;
+        const { TargetId } = request.params;
+        const UserId = request.headers;
 
-        const loggedInvest = await connection('investidores').where('id', id);
-        const targetCons = await connection('consultores').where('id', TargID);
+        const loggedUser = await connection('investidores').where('id', UserId.id);
 
-        if (!targetCons){
-            throw new Error('404 not found');
+        const targetUser = await connection('consultores').where('id', TargetId);
+
+        if (!targetUser) {
+            throw new Error('Consultor/acessor não encontrado');
         }
 
-        const oldDislikes = loggedInvest.likes;
+        const oldDisLikes = loggedUser[0].dislikes;
 
-        loggedInvest.update('dislikes', [oldDislikes, targetCons.id]);
+        const newDisLikes = `${oldDisLikes} ${targetUser[0].id}`;
 
-        return response.json(loggedInvest);
+        await connection('consultores').where('id', UserId.id).update({ dislikes: newDisLikes });
+
+        return response.json(loggedUser);
     }
 }
