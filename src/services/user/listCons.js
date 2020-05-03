@@ -4,6 +4,7 @@ module.exports = {
     async index(request, response) {
 
         const uid = request.headers;
+
         if(!uid){
             return response.status(401).json({error: 'Você não está logado!'});
         }
@@ -15,12 +16,18 @@ module.exports = {
 
         const investidores = await connection('investidores').select('*');
 
-        if (likes !== null){
-            investidores.filter(consultor => !likes.includes(consultor.id));
+        const investid = investidores[0].id;
+
+        if (likes !== null && likes.includes(investid)){
+            const investidor = investidores.filter(investidor => investidor.id !== investid);
+
+            return response.json(investidor[0]);
         }
 
-        if(dislikes !== null){
-            investidores.filter(consultor => !dislikes.includes(consultor.id));
+        if(dislikes !== null && dislikes.includes(investid)){
+            const investidor = investidores.filter(investidor => investidor.id !== investid);
+
+            return response.json(investidor[0]);
         }
 
         const investidor = investidores[0];
