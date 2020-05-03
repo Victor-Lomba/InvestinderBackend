@@ -5,12 +5,12 @@ module.exports = {
 
         const uid = request.headers;
 
-        const usuario = await connection('investidores').where('id', uid).select('*'); 
+        const usuario = await connection('investidores').where('id', uid).select('*');
 
         const likes = usuario.likes;
         const dislikes = usuario.dislikes;
 
-        const consultor = await connection('consultores').select('*');
+        const consultor = await connection('consultores').first();
 
 
         return response.json(consultor);

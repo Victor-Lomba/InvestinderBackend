@@ -22,11 +22,11 @@ userRouter.get('/consultor/list', ListCons.index);
 
 userRouter.post('/consultor', ConsultorUserCreator.create);
 
-userRouter.post('/consultor/like',  UserLike.like);
+userRouter.post('/investidor/:TargetId', UserLike.like);
 
 userRouter.post('/consultor/dislike', isAuthenticated.confirmAuth, UserDislike.dislike);
 
-userRouter.post('/investidor/like', isAuthenticated.confirmAuth, UserConsLike.like);
+userRouter.post('/consultor/:TargetId', UserConsLike.like);
 
 userRouter.post('/investidor/dislike', isAuthenticated.confirmAuth, UserConsDislike.dislike);
 

@@ -9,9 +9,9 @@ exports.up = function(knex) {
       table.string('bio').nullable();
       table.string('interesses').nullable();
       table.string('pic').nullable();
-      table.json('likes').nullable();
-      table.json('dislikes').nullable();
-      table.json('matches').nullable();
+      table.string('likes').nullable();
+      table.string('dislikes').nullable();
+      table.string('matches').nullable();
   })
 };
 
