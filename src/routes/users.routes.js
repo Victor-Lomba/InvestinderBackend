@@ -22,11 +22,11 @@ userRouter.get('/consultor/list', ListCons.index);
 
 userRouter.post('/consultor', ConsultorUserCreator.create);
 
-userRouter.post('/investidor/:TargetId/like', UserLike.like);
+userRouter.post('/investidor/:TargetId/like', UserLike.like); // investidor curtindo consultor
 
 userRouter.post('/investidor/:TargetId/dislike', UserDislike.dislike);
 
-userRouter.post('/consultor/:TargetId/like', UserConsLike.like);
+userRouter.post('/consultor/:TargetId/like', UserConsLike.like); // consultor curtindo investidor
 
 userRouter.post('/consultor/:TargetId/dislike', UserConsDislike.dislike);
 
