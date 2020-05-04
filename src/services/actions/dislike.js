@@ -13,7 +13,7 @@ module.exports = {
             return response.status(404).json({error: 'Usuário não encontrado!'});
         }
 
-        const oldDisLikes = loggedUser[0].dislikes;
+        const oldDisLikes = loggedUser[0].dislikes !== null ? loggedUser[0].dislikes : '';
 
         const newDisLikes = `${oldDisLikes} ${targetUser[0].id}`;
 

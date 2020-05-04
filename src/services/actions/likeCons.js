@@ -13,15 +13,17 @@ module.exports = {
             return response.status(404).json({error: 'Usuário não encontrado!'});
         }
 
-        const oldLikes = loggedUser[0].likes;
+        const oldLikes = usuario[0].likes !== null ? usuario[0].likes.split(' ') : '';
 
-        const matcheck = targetUser[0].likes;
+        const matcheck = usuario[0].likes !== null ? usuario[0].likes.split(' ') : null;
 
-        if (matcheck !== null && matcheck.indexOf(loggedUser[0].id)) {
-            const OldMatches = loggedUser[0].matches;
+        if (matcheck !== null && matcheck.includes(loggedUser[0].id)) {
+            const OldMatches = loggedUser[0].matches !== null ? loggedUser[0].matches : '';
+            const OldMatches2 = targetUser[0].matches !== null ? targetUser[0].matches : '';
+
 
             const newMatches = `${OldMatches} ${targetUser[0].id}`;
-            const newMatches2 = `${OldMatches} ${loggedUser[0].id}`;
+            const newMatches2 = `${OldMatches2} ${loggedUser[0].id}`;
 
             await connection('consultores').where('id', UserId.UserId).update({ matches: newMatches });
             await connection('investidores').where('id', TargetId).update({ matches: newMatches2 });
@@ -39,8 +41,6 @@ module.exports = {
         }
 
         const newLikes = `${oldLikes} ${targetUser[0].id}`;
-
-        delete null;
 
         await connection('consultores').where('id', UserId.UserId).update({likes: newLikes});
 

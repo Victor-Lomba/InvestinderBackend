@@ -14,24 +14,20 @@ module.exports = {
         const likes = usuario[0].likes !== null ? usuario[0].likes.split(' ') : null;
         const dislikes = usuario[0].dislikes !== null ? usuario[0].dislikes.split(' ') : null;
 
-        const consultores = await connection('consultores').select('*');
+        var consultores = await connection('consultores').select('*');
 
-        const consid = consultores[0].id;
-
-        if (likes !== null && likes.includes(consid)){
-            const consultor = consultores.filter(consultor => consultor.id !== consid);
-
-            return response.json(consultor[0]);
+        if (likes !== null){
+            for(ids of likes){
+                consultores = consultores.filter(cons => ids !== cons.id);
+           }
+           if (dislikes !== null){
+            for(ids of dislikes){
+                consultores = consultores.filter(cons => ids !== cons.id);
+            }
+           }
         }
 
-        if(dislikes !== null && dislikes.includes(consid)){
-            const consultor = consultores.filter(consultor => consultor.id !== consid);
 
-            return response.json(consultor[0]);
-        }
-
-        const consultor = consultores[0];
-
-        return response.json(consultor);
+        return response.json(consultores[0]);
     }
 }
