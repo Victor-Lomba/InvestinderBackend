@@ -15,18 +15,22 @@ module.exports = {
         const dislikes = usuario[0].dislikes !== null ? usuario[0].dislikes.split(' ') : null;
 
         var consultores = await connection('consultores').select('*');
+        var consult = []
 
         if (likes !== null){
-            for(ids of likes){
-                consultores = consultores.filter(cons => ids !== cons.id);
-           }
-           if (dislikes !== null){
-            for(ids of dislikes){
-                consultores = consultores.filter(cons => ids !== cons.id);
+            consultores.forEach(item => likes.includes(item.id) && consult.push(item));
+           return response.json(consult);
+        }
+        if (dislikes !== null){
+            for(consultor of consultores){
+                if (!dislikes.includes(consultor.id)){
+                    consult.push(consultor);
+                }
             }
-           }
+            return response.json(consult[0]);
         }
 
+        consult = consultores[0];
 
         return response.json(consultores[0]);
     }
