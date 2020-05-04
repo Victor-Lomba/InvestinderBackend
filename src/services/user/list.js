@@ -17,11 +17,12 @@ module.exports = {
         var consultores = await connection('consultores').select('*');
 
         var consult = []
+        var c = []
 
         if (likes !== null){
 
             for(var i = 0; i < consultores.length; i++){
-                if(likes.search(consultores[i].id) === -1 ){
+                if(likes.search(consultores[i].id) === -1){
                     consult.push(consultores[i]);
                 } else {
                 }

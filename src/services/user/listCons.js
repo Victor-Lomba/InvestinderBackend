@@ -12,14 +12,14 @@ module.exports = {
         const usuario = await connection('consultores').where('id', uid.uid);
 
         const likes = usuario[0].likes;
-        const dislikes = usuario[0].dislikes !== null ? usuario[0].dislikes.split(' ') : null;
+        const dislikes = usuario[0].dislikes;
 
         var investidores = await connection('investidores').select('*');
         var invs = []
 
         if (likes !== null){
             for(var i = 0; i < investidores.length; i++){
-                if(likes.search(investidores[i].id) === -1 ){
+                if(likes.search(investidores[i].id) === -1){
                     invs.push(investidores[i]);
                 } else {
                 }
