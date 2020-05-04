@@ -13,9 +13,9 @@ module.exports = {
             return response.status(404).json({error: 'Usuário não encontrado!'});
         }
 
-        const oldLikes = usuario[0].likes !== null ? usuario[0].likes.split(' ') : '';
+        const oldLikes = loggedUser[0].likes !== null ? loggedUser[0].likes.split(' ') : '';
 
-        const matcheck = usuario[0].likes !== null ? usuario[0].likes.split(' ') : null;
+        const matcheck = targetUser[0].likes !== null ? targetUser[0].likes.split(' ') : null;
 
         if (matcheck !== null && matcheck.includes(loggedUser[0].id)) {
             const OldMatches = loggedUser[0].matches !== null ? loggedUser[0].matches : '';
