@@ -7,7 +7,9 @@ module.exports = {
         const ids = match.split(' ');
         let resposta = [];
         for(let id of ids){
-            resposta.push(await connection('investidores').where('id', id).first());
+            if(id != null){
+                resposta.push(await connection('investidores').where('id', id).first());
+            }
         }
         return response.json(resposta);
     }
