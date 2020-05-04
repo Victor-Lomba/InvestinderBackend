@@ -18,9 +18,9 @@ const userRouter = express.Router();
 
 userRouter.post('/investidor', UserCreator.create);
 
-userRouter.get('/investidor/matches',matcheslist.search);
+userRouter.post('/investidor/matches', matcheslist.search);
 
-userRouter.get('/consultor/matches',matcheslistcons.search);
+userRouter.post('/consultor/matches', matcheslistcons.search);
 
 userRouter.get('/investidor/list', List.index);
 
