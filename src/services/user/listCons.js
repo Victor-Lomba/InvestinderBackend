@@ -11,20 +11,27 @@ module.exports = {
 
         const usuario = await connection('consultores').where('id', uid.uid);
 
-        const likes = usuario[0].likes !== null ? usuario[0].likes.split(' ') : null;
+        const likes = usuario[0].likes;
         const dislikes = usuario[0].dislikes !== null ? usuario[0].dislikes.split(' ') : null;
 
         var investidores = await connection('investidores').select('*');
 
         if (likes !== null){
-            for(ids of likes){
-                investidores = investidores.filter(invs => ids !== invs.id);
+            for(var i = 0; i < investidores.length; i++){
+                if(likes.search(investidores[i].id) === -1 ){
+                    console.log(investidores[i]);
+                    return response.json(investidores[i]);
+                } else {
+                    return response.json();
+                }
             }
-           if (dislikes !== null){
+
+            return response.json(investidores[0]);
+        }
+        if (dislikes !== null){
             for(ids of dislikes){
                 investidores = investidores.filter(invs => ids !== invs.id);
             }
-           }
         }
 
 

@@ -26,17 +26,6 @@ module.exports = {
 
             await connection('investidores').where('id', UserId.UserId).update({ matches: newMatches });
             await connection('consultores').where('id', TargetId).update({ matches: newMatches2 });
-
-            const loggedSocket = request.connectedUsers[UserId.UserId];
-            const targetSocket = request.connectedUsers[TargetId];
-
-            if (loggedSocket) {
-                request.io.to(loggedSocket).emit('Match!', targetUser);
-            }
-
-            if (targetSocket) {
-                request.io.to(targetSocket).emit('Match!', loggedUser);
-            }
         }
 
         const newLikes = `${oldLikes} ${targetUser[0].id}`;
