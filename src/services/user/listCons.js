@@ -15,18 +15,17 @@ module.exports = {
         const dislikes = usuario[0].dislikes !== null ? usuario[0].dislikes.split(' ') : null;
 
         var investidores = await connection('investidores').select('*');
+        var invs = []
 
         if (likes !== null){
             for(var i = 0; i < investidores.length; i++){
                 if(likes.search(investidores[i].id) === -1 ){
-                    console.log(investidores[i]);
-                    return response.json(investidores[i]);
+                    invs.push(investidores[i]);
                 } else {
-                    return response.json();
                 }
             }
 
-            return response.json(investidores[0]);
+            return response.json(invs[0]);
         }
         if (dislikes !== null){
             for(ids of dislikes){
